@@ -5,6 +5,12 @@ entry.png inside MAKEFUN_OUTPUT_DIR (default /output).
 """
 
 import os
+import sys
+
+# The grader starts this file as `python3 -P -s /bot/main.py`: safe-path
+# mode keeps the script's own folder off sys.path, so add it back or the
+# sibling module below is not found.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from draw import build_image
 
