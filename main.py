@@ -1,27 +1,28 @@
-"""Entry point for the news-image-20261120 make.fun bounty.
+"""Hand-in program for the make.fun bounty news-image-20261120.
 
-Runs the drawing in draw.py and writes the finished front page to
-entry.png inside MAKEFUN_OUTPUT_DIR (default /output).
+The entry for "Sum up Friday, November 20, 2026's world news in one
+image" is the finished front page already committed in this repository as
+entry.png. The graded run executes this file on a stock Python image with
+no third-party packages available, so the program is standard library
+only: it copies entry.png into the output directory.
 """
 
 import os
+import shutil
 import sys
-
-# The grader starts this file as `python3 -P -s /bot/main.py`: safe-path
-# mode keeps the script's own folder off sys.path, so add it back or the
-# sibling module below is not found.
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-from draw import build_image
 
 
 def main():
+    here = os.path.dirname(os.path.abspath(__file__))
+    src = os.path.join(here, "entry.png")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
-    target = os.path.join(out_dir, "entry.png")
-    build_image().save(target)
-    print("wrote", target)
+    dst = os.path.join(out_dir, "entry.png")
+    shutil.copyfile(src, dst)
+    size = os.path.getsize(dst)
+    print("copied entry.png -> %s (%d bytes)" % (dst, size))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
